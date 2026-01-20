@@ -91,3 +91,22 @@ button:hover {
   border-bottom: 1px solid #eee;
   font-size: 14px;
 }
+/* TABLES */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th {
+  text-align: left;
+  font-size: 13px;
+  color: #6b7280;
+  padding-bottom: 8px;
+}
+
+td {
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+}
