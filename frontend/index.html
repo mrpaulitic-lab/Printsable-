@@ -2,40 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Printsable Dashboard</title>
+  <title>Printsable Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <h1>Printsable Dashboard</h1>
+  <header class="navbar">
+    <div class="logo">Printsable</div>
+    <nav>
+      <span>Dashboard</span>
+      <span>Products</span>
+      <span>Orders</span>
+      <span>Fulfillment</span>
+    </nav>
+  </header>
 
-  <section>
-    <h2>Create Product</h2>
-    <input id="productName" placeholder="Product name" />
-    <button onclick="createProduct()">Create Product</button>
-  </section>
+  <main class="container">
 
-  <section>
-    <h2>Products</h2>
-    <ul id="products"></ul>
-  </section>
+    <div class="card">
+      <h2>Create Product</h2>
+      <div class="row">
+        <input id="productName" placeholder="Product name" />
+        <button onclick="createProduct()">Add Product</button>
+      </div>
+    </div>
 
-  <section>
-    <h2>Create Order</h2>
-    <input id="orderDetails" placeholder="Order notes" />
-    <button onclick="createOrder()">Create Order</button>
-  </section>
+    <div class="card">
+      <h2>Products</h2>
+      <ul id="products" class="list"></ul>
+    </div>
 
-  <section>
-    <h2>Orders</h2>
-    <ul id="orders"></ul>
-  </section>
+    <div class="card">
+      <h2>Create Order</h2>
+      <div class="row">
+        <input id="orderDetails" placeholder="Order notes" />
+        <button onclick="createOrder()">Create Order</button>
+      </div>
+    </div>
 
-  <section>
-    <h2>Fulfillment</h2>
-    <input id="fulfillmentOrderId" placeholder="Order ID" />
-    <button onclick="createFulfillment()">Fulfill Order</button>
-  </section>
+    <div class="card">
+      <h2>Orders</h2>
+      <ul id="orders" class="list"></ul>
+    </div>
+
+    <div class="card">
+      <h2>Fulfillment</h2>
+      <div class="row">
+        <input id="fulfillmentOrderId" placeholder="Order ID" />
+        <button onclick="createFulfillment()">Fulfill</button>
+      </div>
+    </div>
+
+  </main>
 
   <script src="app.js"></script>
 </body>
