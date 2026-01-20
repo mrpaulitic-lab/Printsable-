@@ -1,58 +1,82 @@
-const API = 'http://localhost:3000';
+// In-memory data (no database yet)
+let products = [];
+let orders = [];
 
-async function loadProducts() {
-  const res = await fetch(`${API}/products`);
-  const data = await res.json();
-  const list = document.getElementById('products');
-  list.innerHTML = '';
-  data.forEach(p => {
-    const li = document.createElement('li');
-    li.textContent = `${p.id} - ${p.name || 'Unnamed product'}`;
-    list.appendChild(li);
+let productId = 1;
+let orderId = 1;
+
+/* ======================
+   PRODUCTS
+====================== */
+
+function createProduct() {
+  const input = document.getElementById('productName');
+  const name = input.value.trim();
+
+  if (!name) return;
+
+  const product = {
+    id: productId++,
+    name
+  };
+
+  products.push(product);
+  input.value = '';
+
+  renderProducts();
+}
+
+function renderProducts() {
+  const table = document.getElementById('products');
+  table.innerHTML = '';
+
+  products.forEach(product => {
+    table.innerHTML += `
+      <tr>
+        <td>${product.id}</td>
+        <td>${product.name}</td>
+      </tr>
+    `;
   });
 }
 
-async function createProduct() {
-  const name = document.getElementById('productName').value;
-  await fetch(`${API}/products`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name })
-  });
-  loadProducts();
+/* ======================
+   ORDERS
+====================== */
+
+function createOrder() {
+  const input = document.getElementById('orderDetails');
+  const details = input.value.trim();
+
+  if (!details) return;
+
+  const order = {
+    id: orderId++,
+    details,
+    status: 'pending'
+  };
+
+  orders.push(order);
+  input.value = '';
+
+  renderOrders();
 }
 
-async function loadOrders() {
-  const res = await fetch(`${API}/orders`);
-  const data = await res.json();
-  const list = document.getElementById('orders');
-  list.innerHTML = '';
-  data.forEach(o => {
-    const li = document.createElement('li');
-    li.textContent = `${o.id} - ${o.status}`;
-    list.appendChild(li);
+function renderOrders() {
+  const table = document.getElementById('orders');
+  table.innerHTML = '';
+
+  orders.forEach(order => {
+    table.innerHTML += `
+      <tr>
+        <td>${order.id}</td>
+        <td>${order.details}</td>
+        <td>
+          <span class="status ${order.status}">
+            ${order.status.toUpperCase()}
+          </span>
+        </td>
+      </tr>
+    `;
   });
 }
-
-async function createOrder() {
-  const notes = document.getElementById('orderDetails').value;
-  await fetch(`${API}/orders`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ notes })
-  });
-  loadOrders();
-}
-
-async function createFulfillment() {
-  const orderId = document.getElementById('fulfillmentOrderId').value;
-  await fetch(`${API}/fulfillment`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ orderId })
-  });
-  alert('Fulfillment created');
-}
-
-loadProducts();
-loadOrders();
