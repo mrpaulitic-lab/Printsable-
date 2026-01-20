@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Printsable Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <h1>Printsable Dashboard</h1>
+
+  <section>
+    <h2>Create Product</h2>
+    <input id="productName" placeholder="Product name" />
+    <button onclick="createProduct()">Create Product</button>
+  </section>
+
+  <section>
+    <h2>Products</h2>
+    <ul id="products"></ul>
+  </section>
+
+  <section>
+    <h2>Create Order</h2>
+    <input id="orderDetails" placeholder="Order notes" />
+    <button onclick="createOrder()">Create Order</button>
+  </section>
+
+  <section>
+    <h2>Orders</h2>
+    <ul id="orders"></ul>
+  </section>
+
+  <section>
+    <h2>Fulfillment</h2>
+    <input id="fulfillmentOrderId" placeholder="Order ID" />
+    <button onclick="createFulfillment()">Fulfill Order</button>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
