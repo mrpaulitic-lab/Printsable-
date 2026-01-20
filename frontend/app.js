@@ -76,7 +76,22 @@ function renderOrders() {
             ${order.status.toUpperCase()}
           </span>
         </td>
+        <td>
+          ${order.status === 'pending' ? `<button onclick="fulfillOrder(${order.id})">Fulfill</button>` : ''}
+        </td>
       </tr>
     `;
   });
+}
+
+/* ======================
+   FULFILL ORDER
+====================== */
+
+function fulfillOrder(id) {
+  const order = orders.find(o => o.id === id);
+  if (!order) return;
+
+  order.status = 'fulfilled';
+  renderOrders();
 }
