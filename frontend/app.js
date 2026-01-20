@@ -1,9 +1,9 @@
-// In-memory data (no database yet)
-let products = [];
-let orders = [];
+// In-memory data, now synced with localStorage
+let products = JSON.parse(localStorage.getItem('products')) || [];
+let orders = JSON.parse(localStorage.getItem('orders')) || [];
 
-let productId = 1;
-let orderId = 1;
+let productId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
+let orderId = orders.length ? Math.max(...orders.map(o => o.id)) + 1 : 1;
 
 /* ======================
    PRODUCTS
@@ -21,8 +21,8 @@ function createProduct() {
   };
 
   products.push(product);
+  saveProducts();
   input.value = '';
-
   renderProducts();
 }
 
@@ -38,6 +38,10 @@ function renderProducts() {
       </tr>
     `;
   });
+}
+
+function saveProducts() {
+  localStorage.setItem('products', JSON.stringify(products));
 }
 
 /* ======================
@@ -57,8 +61,8 @@ function createOrder() {
   };
 
   orders.push(order);
+  saveOrders();
   input.value = '';
-
   renderOrders();
 }
 
@@ -84,14 +88,22 @@ function renderOrders() {
   });
 }
 
-/* ======================
-   FULFILL ORDER
-====================== */
-
 function fulfillOrder(id) {
   const order = orders.find(o => o.id === id);
   if (!order) return;
 
   order.status = 'fulfilled';
+  saveOrders();
   renderOrders();
 }
+
+function saveOrders() {
+  localStorage.setItem('orders', JSON.stringify(orders));
+}
+
+/* ======================
+   INITIAL RENDER
+====================== */
+
+renderProducts();
+renderOrders();
