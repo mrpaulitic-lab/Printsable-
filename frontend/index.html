@@ -8,54 +8,67 @@
 </head>
 <body>
 
-  <header class="navbar">
-    <div class="logo">Printsable</div>
-    <nav>
-      <span>Dashboard</span>
-      <span>Products</span>
-      <span>Orders</span>
-      <span>Fulfillment</span>
-    </nav>
-  </header>
+<header class="navbar">
+  <div class="logo">Printsable</div>
+  <nav>
+    <span>Dashboard</span>
+    <span>Products</span>
+    <span>Orders</span>
+    <span>Fulfillment</span>
+  </nav>
+</header>
 
-  <main class="container">
+<main class="container">
 
-    <div class="card">
-      <h2>Create Product</h2>
-      <div class="row">
-        <input id="productName" placeholder="Product name" />
-        <button onclick="createProduct()">Add Product</button>
-      </div>
+  <!-- CREATE PRODUCT -->
+  <div class="card">
+    <h2>Create Product</h2>
+    <div class="row">
+      <input id="productName" placeholder="Product name" />
+      <button onclick="createProduct()">Add Product</button>
     </div>
+  </div>
 
-    <div class="card">
-      <h2>Products</h2>
-      <ul id="products" class="list"></ul>
+  <!-- PRODUCTS TABLE -->
+  <div class="card">
+    <h2>Products</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody id="products"></tbody>
+    </table>
+  </div>
+
+  <!-- CREATE ORDER -->
+  <div class="card">
+    <h2>Create Order</h2>
+    <div class="row">
+      <input id="orderDetails" placeholder="Order details" />
+      <button onclick="createOrder()">Create Order</button>
     </div>
+  </div>
 
-    <div class="card">
-      <h2>Create Order</h2>
-      <div class="row">
-        <input id="orderDetails" placeholder="Order notes" />
-        <button onclick="createOrder()">Create Order</button>
-      </div>
-    </div>
+  <!-- ORDERS TABLE -->
+  <div class="card">
+    <h2>Orders</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Details</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="orders"></tbody>
+    </table>
+  </div>
 
-    <div class="card">
-      <h2>Orders</h2>
-      <ul id="orders" class="list"></ul>
-    </div>
+</main>
 
-    <div class="card">
-      <h2>Fulfillment</h2>
-      <div class="row">
-        <input id="fulfillmentOrderId" placeholder="Order ID" />
-        <button onclick="createFulfillment()">Fulfill</button>
-      </div>
-    </div>
-
-  </main>
-
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
