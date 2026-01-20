@@ -1,76 +1,51 @@
-// In-memory data, now synced with localStorage
-let products = JSON.parse(localStorage.getItem('products')) || [];
-let orders = JSON.parse(localStorage.getItem('orders')) || [];
-
-let productId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
-let orderId = orders.length ? Math.max(...orders.map(o => o.id)) + 1 : 1;
+const API = 'http://localhost:3000';
 
 /* ======================
    PRODUCTS
 ====================== */
 
-function createProduct() {
-  const input = document.getElementById('productName');
-  const name = input.value.trim();
-
-  if (!name) return;
-
-  const product = {
-    id: productId++,
-    name
-  };
-
-  products.push(product);
-  saveProducts();
-  input.value = '';
-  renderProducts();
-}
-
-function renderProducts() {
+async function loadProducts() {
+  const res = await fetch(`${API}/products`);
+  const data = await res.json();
   const table = document.getElementById('products');
   table.innerHTML = '';
 
-  products.forEach(product => {
+  data.forEach(p => {
     table.innerHTML += `
       <tr>
-        <td>${product.id}</td>
-        <td>${product.name}</td>
+        <td>${p.id}</td>
+        <td>${p.name || 'Unnamed product'}</td>
       </tr>
     `;
   });
 }
 
-function saveProducts() {
-  localStorage.setItem('products', JSON.stringify(products));
+async function createProduct() {
+  const input = document.getElementById('productName');
+  const name = input.value.trim();
+  if (!name) return;
+
+  await fetch(`${API}/products`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name })
+  });
+
+  input.value = '';
+  loadProducts();
 }
 
 /* ======================
    ORDERS
 ====================== */
 
-function createOrder() {
-  const input = document.getElementById('orderDetails');
-  const details = input.value.trim();
-
-  if (!details) return;
-
-  const order = {
-    id: orderId++,
-    details,
-    status: 'pending'
-  };
-
-  orders.push(order);
-  saveOrders();
-  input.value = '';
-  renderOrders();
-}
-
-function renderOrders() {
+async function loadOrders() {
+  const res = await fetch(`${API}/orders`);
+  const data = await res.json();
   const table = document.getElementById('orders');
   table.innerHTML = '';
 
-  orders.forEach(order => {
+  data.forEach(order => {
     table.innerHTML += `
       <tr>
         <td>${order.id}</td>
@@ -88,22 +63,34 @@ function renderOrders() {
   });
 }
 
-function fulfillOrder(id) {
-  const order = orders.find(o => o.id === id);
-  if (!order) return;
+async function createOrder() {
+  const input = document.getElementById('orderDetails');
+  const details = input.value.trim();
+  if (!details) return;
 
-  order.status = 'fulfilled';
-  saveOrders();
-  renderOrders();
+  await fetch(`${API}/orders`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ details })
+  });
+
+  input.value = '';
+  loadOrders();
 }
 
-function saveOrders() {
-  localStorage.setItem('orders', JSON.stringify(orders));
+async function fulfillOrder(id) {
+  await fetch(`${API}/fulfillment`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ orderId: id })
+  });
+
+  loadOrders();
 }
 
 /* ======================
-   INITIAL RENDER
+   INITIAL LOAD
 ====================== */
 
-renderProducts();
-renderOrders();
+loadProducts();
+loadOrders();
